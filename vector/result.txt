@@ -163,6 +163,33 @@ gcc_tests/types/pmr_typedefs_debug.cc:23:14: note: to match this '('
   ✗ FAILED (compilation)
 
 Testing: gcc_tests/types/1.cc
+gcc_tests/types/1.cc: In function 'int main()':
+gcc_tests/types/1.cc:31:6: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::value_type& std::vector<T, Allocator>::operator[](size_type) [with T = greedy_ops::X; Allocator = std::allocator<greedy_ops::X>; reference = greedy_ops::X&; size_type = long unsigned int]', declared with attribute 'nodiscard' [-Wunused-result]
+   31 |   v[0];
+      |      ^
+In file included from ./vector:2,
+                 from gcc_tests/types/1.cc:23:
+./vector.h:438:43: note: declared here
+  438 |         [[nodiscard]] constexpr reference operator[](size_type pos){
+      |                                           ^~~~~~~~
+gcc_tests/types/1.cc:32:6: warning: ignoring return value of 'constexpr const std::vector<T, Allocator>::value_type& std::vector<T, Allocator>::operator[](size_type) const [with T = greedy_ops::X; Allocator = std::allocator<greedy_ops::X>; const_reference = const greedy_ops::X&; size_type = long unsigned int]', declared with attribute 'nodiscard' [-Wunused-result]
+   32 |   w[0];
+      |      ^
+./vector.h:448:49: note: declared here
+  448 |         [[nodiscard]] constexpr const_reference operator[](size_type pos) const{
+      |                                                 ^~~~~~~~
+gcc_tests/types/1.cc:33:9: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::size_type std::vector<T, Allocator>::size() const [with T = greedy_ops::X; Allocator = std::allocator<greedy_ops::X>; size_type = long unsigned int]', declared with attribute 'nodiscard' [-Wunused-result]
+   33 |   v.size();
+      |   ~~~~~~^~
+./vector.h:545:43: note: declared here
+  545 |         [[nodiscard]] constexpr size_type size() const noexcept{
+      |                                           ^~~~
+gcc_tests/types/1.cc:34:13: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::size_type std::vector<T, Allocator>::capacity() const [with T = greedy_ops::X; Allocator = std::allocator<greedy_ops::X>; size_type = long unsigned int]', declared with attribute 'nodiscard' [-Wunused-result]
+   34 |   v.capacity();
+      |   ~~~~~~~~~~^~
+./vector.h:566:43: note: declared here
+  566 |         [[nodiscard]] constexpr size_type capacity() const noexcept{
+      |                                           ^~~~~~~~
   ✓ PASSED (compile-only)
 
 Testing: gcc_tests/types/23767.cc
@@ -192,6 +219,70 @@ Testing: gcc_tests/data_access/1.cc
   ✓ PASSED
 
 Testing: gcc_tests/nodiscard.cc
+gcc_tests/nodiscard.cc: In function 'void test_observers(std::vector<int>)':
+gcc_tests/nodiscard.cc:8:9: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::size_type std::vector<T, Allocator>::size() const [with T = int; Allocator = std::allocator<int>; size_type = long unsigned int]', declared with attribute 'nodiscard' [-Wunused-result]
+    8 |   v.size(); // { dg-warning "ignoring return value" }
+      |   ~~~~~~^~
+In file included from ./vector:2,
+                 from gcc_tests/nodiscard.cc:3:
+./vector.h:545:43: note: declared here
+  545 |         [[nodiscard]] constexpr size_type size() const noexcept{
+      |                                           ^~~~
+gcc_tests/nodiscard.cc:9:13: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::size_type std::vector<T, Allocator>::capacity() const [with T = int; Allocator = std::allocator<int>; size_type = long unsigned int]', declared with attribute 'nodiscard' [-Wunused-result]
+    9 |   v.capacity(); // { dg-warning "ignoring return value" }
+      |   ~~~~~~~~~~^~
+./vector.h:566:43: note: declared here
+  566 |         [[nodiscard]] constexpr size_type capacity() const noexcept{
+      |                                           ^~~~~~~~
+gcc_tests/nodiscard.cc:10:10: warning: ignoring return value of 'constexpr bool std::vector<T, Allocator>::empty() const [with T = int; Allocator = std::allocator<int>]', declared with attribute 'nodiscard' [-Wunused-result]
+   10 |   v.empty(); // { dg-warning "ignoring return value" }
+      |   ~~~~~~~^~
+./vector.h:540:38: note: declared here
+  540 |         [[nodiscard]] constexpr bool empty() const noexcept{
+      |                                      ^~~~~
+gcc_tests/nodiscard.cc: In function 'void test_element_access(std::vector<float>)':
+gcc_tests/nodiscard.cc:16:10: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::value_type& std::vector<T, Allocator>::front() [with T = float; Allocator = std::allocator<float>; reference = float&]', declared with attribute 'nodiscard' [-Wunused-result]
+   16 |   v.front(); // { dg-warning "ignoring return value" }
+      |   ~~~~~~~^~
+./vector.h:459:43: note: declared here
+  459 |         [[nodiscard]] constexpr reference front(){
+      |                                           ^~~~~
+gcc_tests/nodiscard.cc:17:9: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::value_type& std::vector<T, Allocator>::back() [with T = float; Allocator = std::allocator<float>; reference = float&]', declared with attribute 'nodiscard' [-Wunused-result]
+   17 |   v.back();  // { dg-warning "ignoring return value" }
+      |   ~~~~~~^~
+./vector.h:468:43: note: declared here
+  468 |         [[nodiscard]] constexpr reference back(){
+      |                                           ^~~~
+gcc_tests/nodiscard.cc:18:6: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::value_type& std::vector<T, Allocator>::operator[](size_type) [with T = float; Allocator = std::allocator<float>; reference = float&; size_type = long unsigned int]', declared with attribute 'nodiscard' [-Wunused-result]
+   18 |   v[1];      // { dg-warning "ignoring return value" }
+      |      ^
+./vector.h:438:43: note: declared here
+  438 |         [[nodiscard]] constexpr reference operator[](size_type pos){
+      |                                           ^~~~~~~~
+gcc_tests/nodiscard.cc:19:7: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::value_type& std::vector<T, Allocator>::at(size_type) [with T = float; Allocator = std::allocator<float>; reference = float&; size_type = long unsigned int]', declared with attribute 'nodiscard' [-Wunused-result]
+   19 |   v.at(1);   // { dg-warning "ignoring return value" }
+      |   ~~~~^~~
+./vector.h:417:43: note: declared here
+  417 |         [[nodiscard]] constexpr reference at(size_type pos){
+      |                                           ^~
+gcc_tests/nodiscard.cc:20:9: warning: ignoring return value of 'constexpr T* std::vector<T, Allocator>::data() [with T = float; Allocator = std::allocator<float>]', declared with attribute 'nodiscard' [-Wunused-result]
+   20 |   v.data();  // { dg-warning "ignoring return value" }
+      |   ~~~~~~^~
+./vector.h:477:36: note: declared here
+  477 |         [[nodiscard]] constexpr T* data() noexcept{
+      |                                    ^~~~
+gcc_tests/nodiscard.cc:22:7: warning: ignoring return value of 'constexpr const std::vector<T, Allocator>::value_type& std::vector<T, Allocator>::operator[](size_type) const [with T = float; Allocator = std::allocator<float>; const_reference = const float&; size_type = long unsigned int]', declared with attribute 'nodiscard' [-Wunused-result]
+   22 |   cv[1];     // { dg-warning "ignoring return value" }
+      |       ^
+./vector.h:448:49: note: declared here
+  448 |         [[nodiscard]] constexpr const_reference operator[](size_type pos) const{
+      |                                                 ^~~~~~~~
+gcc_tests/nodiscard.cc:24:10: warning: ignoring return value of 'constexpr const T* std::vector<T, Allocator>::data() const [with T = float; Allocator = std::allocator<float>]', declared with attribute 'nodiscard' [-Wunused-result]
+   24 |   cv.data(); // { dg-warning "ignoring return value" }
+      |   ~~~~~~~^~
+./vector.h:483:42: note: declared here
+  483 |         [[nodiscard]] constexpr const T* data() const noexcept{
+      |                                          ^~~~
 gcc_tests/nodiscard.cc: In function 'void test_rel_ops(std::vector<char>)':
 gcc_tests/nodiscard.cc:32:5: warning: ignoring return value of 'constexpr bool std::operator<(strong_ordering, __cmp_cat::__unspec)', declared with attribute 'nodiscard' [-Wunused-result]
    32 |   v < v;  // { dg-warning "ignoring return value" }
@@ -199,9 +290,7 @@ gcc_tests/nodiscard.cc:32:5: warning: ignoring return value of 'constexpr bool s
 In file included from /usr/local/include/c++/13.4.0/bits/stl_pair.h:65,
                  from /usr/local/include/c++/13.4.0/bits/stl_tempbuf.h:62,
                  from /usr/local/include/c++/13.4.0/memory:66,
-                 from ./vector.h:6,
-                 from ./vector:2,
-                 from gcc_tests/nodiscard.cc:3:
+                 from ./vector.h:6:
 /usr/local/include/c++/13.4.0/compare:292:5: note: declared here
   292 |     operator< (strong_ordering __v, __cmp_cat::__unspec) noexcept
       |     ^~~~~~~~
@@ -224,6 +313,78 @@ gcc_tests/nodiscard.cc:35:5: warning: ignoring return value of 'constexpr bool s
   307 |     operator>=(strong_ordering __v, __cmp_cat::__unspec) noexcept
       |     ^~~~~~~~
 gcc_tests/nodiscard.cc: In function 'void test_iterators(std::vector<S>)':
+gcc_tests/nodiscard.cc:43:10: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::iterator std::vector<T, Allocator>::begin() [with T = S; Allocator = std::allocator<S>; iterator = std::vector<S>::normal_iterator<S*>]', declared with attribute 'nodiscard' [-Wunused-result]
+   43 |   v.begin();  // { dg-warning "ignoring return value" }
+      |   ~~~~~~~^~
+./vector.h:488:42: note: declared here
+  488 |         [[nodiscard]] constexpr iterator begin() noexcept{
+      |                                          ^~~~~
+gcc_tests/nodiscard.cc:44:8: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::iterator std::vector<T, Allocator>::end() [with T = S; Allocator = std::allocator<S>; iterator = std::vector<S>::normal_iterator<S*>]', declared with attribute 'nodiscard' [-Wunused-result]
+   44 |   v.end();    // { dg-warning "ignoring return value" }
+      |   ~~~~~^~
+./vector.h:501:42: note: declared here
+  501 |         [[nodiscard]] constexpr iterator end() noexcept{
+      |                                          ^~~
+gcc_tests/nodiscard.cc:45:13: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::reverse_iterator std::vector<T, Allocator>::rbegin() [with T = S; Allocator = std::allocator<S>; reverse_iterator = std::reverse_iterator<std::vector<S>::normal_iterator<S*> >]', declared with attribute 'nodiscard' [-Wunused-result]
+   45 |   v.rbegin(); // { dg-warning "ignoring return value" }
+      |             ^
+./vector.h:514:50: note: declared here
+  514 |         [[nodiscard]] constexpr reverse_iterator rbegin() noexcept{
+      |                                                  ^~~~~~
+gcc_tests/nodiscard.cc:46:11: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::reverse_iterator std::vector<T, Allocator>::rend() [with T = S; Allocator = std::allocator<S>; reverse_iterator = std::reverse_iterator<std::vector<S>::normal_iterator<S*> >]', declared with attribute 'nodiscard' [-Wunused-result]
+   46 |   v.rend();   // { dg-warning "ignoring return value" }
+      |           ^
+./vector.h:527:50: note: declared here
+  527 |         [[nodiscard]] constexpr reverse_iterator rend() noexcept{
+      |                                                  ^~~~
+gcc_tests/nodiscard.cc:48:11: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::const_iterator std::vector<T, Allocator>::begin() const [with T = S; Allocator = std::allocator<S>; const_iterator = std::vector<S>::normal_iterator<const S*>]', declared with attribute 'nodiscard' [-Wunused-result]
+   48 |   cv.begin();  // { dg-warning "ignoring return value" }
+      |   ~~~~~~~~^~
+./vector.h:492:48: note: declared here
+  492 |         [[nodiscard]] constexpr const_iterator begin() const noexcept{
+      |                                                ^~~~~
+gcc_tests/nodiscard.cc:49:9: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::const_iterator std::vector<T, Allocator>::end() const [with T = S; Allocator = std::allocator<S>; const_iterator = std::vector<S>::normal_iterator<const S*>]', declared with attribute 'nodiscard' [-Wunused-result]
+   49 |   cv.end();    // { dg-warning "ignoring return value" }
+      |   ~~~~~~^~
+./vector.h:505:48: note: declared here
+  505 |         [[nodiscard]] constexpr const_iterator end() const noexcept{
+      |                                                ^~~
+gcc_tests/nodiscard.cc:50:14: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::const_reverse_iterator std::vector<T, Allocator>::rbegin() const [with T = S; Allocator = std::allocator<S>; const_reverse_iterator = std::reverse_iterator<std::vector<S>::normal_iterator<const S*> >]', declared with attribute 'nodiscard' [-Wunused-result]
+   50 |   cv.rbegin(); // { dg-warning "ignoring return value" }
+      |              ^
+./vector.h:518:56: note: declared here
+  518 |         [[nodiscard]] constexpr const_reverse_iterator rbegin() const noexcept{
+      |                                                        ^~~~~~
+gcc_tests/nodiscard.cc:51:12: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::const_reverse_iterator std::vector<T, Allocator>::rend() const [with T = S; Allocator = std::allocator<S>; const_reverse_iterator = std::reverse_iterator<std::vector<S>::normal_iterator<const S*> >]', declared with attribute 'nodiscard' [-Wunused-result]
+   51 |   cv.rend();   // { dg-warning "ignoring return value" }
+      |            ^
+./vector.h:531:56: note: declared here
+  531 |         [[nodiscard]] constexpr const_reverse_iterator rend() const noexcept{
+      |                                                        ^~~~
+gcc_tests/nodiscard.cc:53:11: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::const_iterator std::vector<T, Allocator>::cbegin() const [with T = S; Allocator = std::allocator<S>; const_iterator = std::vector<S>::normal_iterator<const S*>]', declared with attribute 'nodiscard' [-Wunused-result]
+   53 |   v.cbegin();  // { dg-warning "ignoring return value" }
+      |   ~~~~~~~~^~
+./vector.h:496:48: note: declared here
+  496 |         [[nodiscard]] constexpr const_iterator cbegin() const noexcept{
+      |                                                ^~~~~~
+gcc_tests/nodiscard.cc:54:9: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::const_iterator std::vector<T, Allocator>::cend() const [with T = S; Allocator = std::allocator<S>; const_iterator = std::vector<S>::normal_iterator<const S*>]', declared with attribute 'nodiscard' [-Wunused-result]
+   54 |   v.cend();    // { dg-warning "ignoring return value" }
+      |   ~~~~~~^~
+./vector.h:509:48: note: declared here
+  509 |         [[nodiscard]] constexpr const_iterator cend() const noexcept{
+      |                                                ^~~~
+gcc_tests/nodiscard.cc:55:14: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::const_reverse_iterator std::vector<T, Allocator>::crbegin() const [with T = S; Allocator = std::allocator<S>; const_reverse_iterator = std::reverse_iterator<std::vector<S>::normal_iterator<const S*> >]', declared with attribute 'nodiscard' [-Wunused-result]
+   55 |   v.crbegin(); // { dg-warning "ignoring return value" }
+      |              ^
+./vector.h:522:56: note: declared here
+  522 |         [[nodiscard]] constexpr const_reverse_iterator crbegin() const noexcept{
+      |                                                        ^~~~~~~
+gcc_tests/nodiscard.cc:56:12: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::const_reverse_iterator std::vector<T, Allocator>::crend() const [with T = S; Allocator = std::allocator<S>; const_reverse_iterator = std::reverse_iterator<std::vector<S>::normal_iterator<const S*> >]', declared with attribute 'nodiscard' [-Wunused-result]
+   56 |   v.crend();   // { dg-warning "ignoring return value" }
+      |            ^
+./vector.h:535:56: note: declared here
+  535 |         [[nodiscard]] constexpr const_reverse_iterator crend() const noexcept{
+      |                                                        ^~~~~
 gcc_tests/nodiscard.cc:76:6: warning: ignoring return value of 'constexpr bool std::operator<(strong_ordering, __cmp_cat::__unspec)', declared with attribute 'nodiscard' [-Wunused-result]
    76 |   ci < j;  // { dg-warning "ignoring return value" }
       |   ~~~^~~
@@ -248,6 +409,56 @@ gcc_tests/nodiscard.cc:79:6: warning: ignoring return value of 'constexpr bool s
 /usr/local/include/c++/13.4.0/compare:307:5: note: declared here
   307 |     operator>=(strong_ordering __v, __cmp_cat::__unspec) noexcept
       |     ^~~~~~~~
+gcc_tests/nodiscard.cc: In function 'void test_observers(std::vector<bool>)':
+gcc_tests/nodiscard.cc:85:9: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::size_type std::vector<T, Allocator>::size() const [with T = bool; Allocator = std::allocator<bool>; size_type = long unsigned int]', declared with attribute 'nodiscard' [-Wunused-result]
+   85 |   v.size(); // { dg-warning "ignoring return value" }
+      |   ~~~~~~^~
+./vector.h:545:43: note: declared here
+  545 |         [[nodiscard]] constexpr size_type size() const noexcept{
+      |                                           ^~~~
+gcc_tests/nodiscard.cc:86:13: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::size_type std::vector<T, Allocator>::capacity() const [with T = bool; Allocator = std::allocator<bool>; size_type = long unsigned int]', declared with attribute 'nodiscard' [-Wunused-result]
+   86 |   v.capacity(); // { dg-warning "ignoring return value" }
+      |   ~~~~~~~~~~^~
+./vector.h:566:43: note: declared here
+  566 |         [[nodiscard]] constexpr size_type capacity() const noexcept{
+      |                                           ^~~~~~~~
+gcc_tests/nodiscard.cc:87:10: warning: ignoring return value of 'constexpr bool std::vector<T, Allocator>::empty() const [with T = bool; Allocator = std::allocator<bool>]', declared with attribute 'nodiscard' [-Wunused-result]
+   87 |   v.empty(); // { dg-warning "ignoring return value" }
+      |   ~~~~~~~^~
+./vector.h:540:38: note: declared here
+  540 |         [[nodiscard]] constexpr bool empty() const noexcept{
+      |                                      ^~~~~
+gcc_tests/nodiscard.cc: In function 'void test_element_access(std::vector<bool>)':
+gcc_tests/nodiscard.cc:93:10: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::value_type& std::vector<T, Allocator>::front() [with T = bool; Allocator = std::allocator<bool>; reference = bool&]', declared with attribute 'nodiscard' [-Wunused-result]
+   93 |   v.front(); // { dg-warning "ignoring return value" }
+      |   ~~~~~~~^~
+./vector.h:459:43: note: declared here
+  459 |         [[nodiscard]] constexpr reference front(){
+      |                                           ^~~~~
+gcc_tests/nodiscard.cc:94:9: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::value_type& std::vector<T, Allocator>::back() [with T = bool; Allocator = std::allocator<bool>; reference = bool&]', declared with attribute 'nodiscard' [-Wunused-result]
+   94 |   v.back();  // { dg-warning "ignoring return value" }
+      |   ~~~~~~^~
+./vector.h:468:43: note: declared here
+  468 |         [[nodiscard]] constexpr reference back(){
+      |                                           ^~~~
+gcc_tests/nodiscard.cc:95:6: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::value_type& std::vector<T, Allocator>::operator[](size_type) [with T = bool; Allocator = std::allocator<bool>; reference = bool&; size_type = long unsigned int]', declared with attribute 'nodiscard' [-Wunused-result]
+   95 |   v[1];      // { dg-warning "ignoring return value" }
+      |      ^
+./vector.h:438:43: note: declared here
+  438 |         [[nodiscard]] constexpr reference operator[](size_type pos){
+      |                                           ^~~~~~~~
+gcc_tests/nodiscard.cc:96:7: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::value_type& std::vector<T, Allocator>::at(size_type) [with T = bool; Allocator = std::allocator<bool>; reference = bool&; size_type = long unsigned int]', declared with attribute 'nodiscard' [-Wunused-result]
+   96 |   v.at(1);   // { dg-warning "ignoring return value" }
+      |   ~~~~^~~
+./vector.h:417:43: note: declared here
+  417 |         [[nodiscard]] constexpr reference at(size_type pos){
+      |                                           ^~
+gcc_tests/nodiscard.cc:98:7: warning: ignoring return value of 'constexpr const std::vector<T, Allocator>::value_type& std::vector<T, Allocator>::operator[](size_type) const [with T = bool; Allocator = std::allocator<bool>; const_reference = const bool&; size_type = long unsigned int]', declared with attribute 'nodiscard' [-Wunused-result]
+   98 |   cv[1];     // { dg-warning "ignoring return value" }
+      |       ^
+./vector.h:448:49: note: declared here
+  448 |         [[nodiscard]] constexpr const_reference operator[](size_type pos) const{
+      |                                                 ^~~~~~~~
 gcc_tests/nodiscard.cc: In function 'void test_rel_ops(std::vector<bool>)':
 gcc_tests/nodiscard.cc:107:5: warning: ignoring return value of 'constexpr bool std::operator<(strong_ordering, __cmp_cat::__unspec)', declared with attribute 'nodiscard' [-Wunused-result]
   107 |   v < v;  // { dg-warning "ignoring return value" }
@@ -274,6 +485,78 @@ gcc_tests/nodiscard.cc:110:5: warning: ignoring return value of 'constexpr bool 
   307 |     operator>=(strong_ordering __v, __cmp_cat::__unspec) noexcept
       |     ^~~~~~~~
 gcc_tests/nodiscard.cc: In function 'void test_iterators(std::vector<bool>)':
+gcc_tests/nodiscard.cc:116:10: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::iterator std::vector<T, Allocator>::begin() [with T = bool; Allocator = std::allocator<bool>; iterator = std::vector<bool>::normal_iterator<bool*>]', declared with attribute 'nodiscard' [-Wunused-result]
+  116 |   v.begin();  // { dg-warning "ignoring return value" }
+      |   ~~~~~~~^~
+./vector.h:488:42: note: declared here
+  488 |         [[nodiscard]] constexpr iterator begin() noexcept{
+      |                                          ^~~~~
+gcc_tests/nodiscard.cc:117:8: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::iterator std::vector<T, Allocator>::end() [with T = bool; Allocator = std::allocator<bool>; iterator = std::vector<bool>::normal_iterator<bool*>]', declared with attribute 'nodiscard' [-Wunused-result]
+  117 |   v.end();    // { dg-warning "ignoring return value" }
+      |   ~~~~~^~
+./vector.h:501:42: note: declared here
+  501 |         [[nodiscard]] constexpr iterator end() noexcept{
+      |                                          ^~~
+gcc_tests/nodiscard.cc:118:13: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::reverse_iterator std::vector<T, Allocator>::rbegin() [with T = bool; Allocator = std::allocator<bool>; reverse_iterator = std::reverse_iterator<std::vector<bool>::normal_iterator<bool*> >]', declared with attribute 'nodiscard' [-Wunused-result]
+  118 |   v.rbegin(); // { dg-warning "ignoring return value" }
+      |             ^
+./vector.h:514:50: note: declared here
+  514 |         [[nodiscard]] constexpr reverse_iterator rbegin() noexcept{
+      |                                                  ^~~~~~
+gcc_tests/nodiscard.cc:119:11: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::reverse_iterator std::vector<T, Allocator>::rend() [with T = bool; Allocator = std::allocator<bool>; reverse_iterator = std::reverse_iterator<std::vector<bool>::normal_iterator<bool*> >]', declared with attribute 'nodiscard' [-Wunused-result]
+  119 |   v.rend();   // { dg-warning "ignoring return value" }
+      |           ^
+./vector.h:527:50: note: declared here
+  527 |         [[nodiscard]] constexpr reverse_iterator rend() noexcept{
+      |                                                  ^~~~
+gcc_tests/nodiscard.cc:121:11: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::const_iterator std::vector<T, Allocator>::begin() const [with T = bool; Allocator = std::allocator<bool>; const_iterator = std::vector<bool>::normal_iterator<const bool*>]', declared with attribute 'nodiscard' [-Wunused-result]
+  121 |   cv.begin();  // { dg-warning "ignoring return value" }
+      |   ~~~~~~~~^~
+./vector.h:492:48: note: declared here
+  492 |         [[nodiscard]] constexpr const_iterator begin() const noexcept{
+      |                                                ^~~~~
+gcc_tests/nodiscard.cc:122:9: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::const_iterator std::vector<T, Allocator>::end() const [with T = bool; Allocator = std::allocator<bool>; const_iterator = std::vector<bool>::normal_iterator<const bool*>]', declared with attribute 'nodiscard' [-Wunused-result]
+  122 |   cv.end();    // { dg-warning "ignoring return value" }
+      |   ~~~~~~^~
+./vector.h:505:48: note: declared here
+  505 |         [[nodiscard]] constexpr const_iterator end() const noexcept{
+      |                                                ^~~
+gcc_tests/nodiscard.cc:123:14: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::const_reverse_iterator std::vector<T, Allocator>::rbegin() const [with T = bool; Allocator = std::allocator<bool>; const_reverse_iterator = std::reverse_iterator<std::vector<bool>::normal_iterator<const bool*> >]', declared with attribute 'nodiscard' [-Wunused-result]
+  123 |   cv.rbegin(); // { dg-warning "ignoring return value" }
+      |              ^
+./vector.h:518:56: note: declared here
+  518 |         [[nodiscard]] constexpr const_reverse_iterator rbegin() const noexcept{
+      |                                                        ^~~~~~
+gcc_tests/nodiscard.cc:124:12: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::const_reverse_iterator std::vector<T, Allocator>::rend() const [with T = bool; Allocator = std::allocator<bool>; const_reverse_iterator = std::reverse_iterator<std::vector<bool>::normal_iterator<const bool*> >]', declared with attribute 'nodiscard' [-Wunused-result]
+  124 |   cv.rend();   // { dg-warning "ignoring return value" }
+      |            ^
+./vector.h:531:56: note: declared here
+  531 |         [[nodiscard]] constexpr const_reverse_iterator rend() const noexcept{
+      |                                                        ^~~~
+gcc_tests/nodiscard.cc:126:11: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::const_iterator std::vector<T, Allocator>::cbegin() const [with T = bool; Allocator = std::allocator<bool>; const_iterator = std::vector<bool>::normal_iterator<const bool*>]', declared with attribute 'nodiscard' [-Wunused-result]
+  126 |   v.cbegin();  // { dg-warning "ignoring return value" }
+      |   ~~~~~~~~^~
+./vector.h:496:48: note: declared here
+  496 |         [[nodiscard]] constexpr const_iterator cbegin() const noexcept{
+      |                                                ^~~~~~
+gcc_tests/nodiscard.cc:127:9: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::const_iterator std::vector<T, Allocator>::cend() const [with T = bool; Allocator = std::allocator<bool>; const_iterator = std::vector<bool>::normal_iterator<const bool*>]', declared with attribute 'nodiscard' [-Wunused-result]
+  127 |   v.cend();    // { dg-warning "ignoring return value" }
+      |   ~~~~~~^~
+./vector.h:509:48: note: declared here
+  509 |         [[nodiscard]] constexpr const_iterator cend() const noexcept{
+      |                                                ^~~~
+gcc_tests/nodiscard.cc:128:14: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::const_reverse_iterator std::vector<T, Allocator>::crbegin() const [with T = bool; Allocator = std::allocator<bool>; const_reverse_iterator = std::reverse_iterator<std::vector<bool>::normal_iterator<const bool*> >]', declared with attribute 'nodiscard' [-Wunused-result]
+  128 |   v.crbegin(); // { dg-warning "ignoring return value" }
+      |              ^
+./vector.h:522:56: note: declared here
+  522 |         [[nodiscard]] constexpr const_reverse_iterator crbegin() const noexcept{
+      |                                                        ^~~~~~~
+gcc_tests/nodiscard.cc:129:12: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::const_reverse_iterator std::vector<T, Allocator>::crend() const [with T = bool; Allocator = std::allocator<bool>; const_reverse_iterator = std::reverse_iterator<std::vector<bool>::normal_iterator<const bool*> >]', declared with attribute 'nodiscard' [-Wunused-result]
+  129 |   v.crend();   // { dg-warning "ignoring return value" }
+      |            ^
+./vector.h:535:56: note: declared here
+  535 |         [[nodiscard]] constexpr const_reverse_iterator crend() const noexcept{
+      |                                                        ^~~~~
 gcc_tests/nodiscard.cc:149:6: warning: ignoring return value of 'constexpr bool std::operator<(strong_ordering, __cmp_cat::__unspec)', declared with attribute 'nodiscard' [-Wunused-result]
   149 |   ci < j;  // { dg-warning "ignoring return value" }
       |   ~~~^~~
@@ -1370,65 +1653,65 @@ Testing: gcc_tests/capacity/1.cc
   ✓ PASSED
 
 Testing: gcc_tests/capacity/2.cc
-/usr/bin/ld: /tmp/cclI8xvW.o: in function `__gnu_test::copy_constructor::count()':
+/usr/bin/ld: /tmp/ccLvVKpr.o: in function `__gnu_test::copy_constructor::count()':
 2.cc:(.text._ZN10__gnu_test16copy_constructor5countEv[_ZN10__gnu_test16copy_constructor5countEv]+0x0): undefined reference to `__gnu_test::copy_constructor::count_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test16copy_constructor5countEv[_ZN10__gnu_test16copy_constructor5countEv]+0x4): undefined reference to `__gnu_test::copy_constructor::count_'
-/usr/bin/ld: /tmp/cclI8xvW.o: in function `__gnu_test::copy_constructor::mark_call()':
+/usr/bin/ld: /tmp/ccLvVKpr.o: in function `__gnu_test::copy_constructor::mark_call()':
 2.cc:(.text._ZN10__gnu_test16copy_constructor9mark_callEv[_ZN10__gnu_test16copy_constructor9mark_callEv]+0x8): undefined reference to `__gnu_test::copy_constructor::count_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test16copy_constructor9mark_callEv[_ZN10__gnu_test16copy_constructor9mark_callEv]+0xc): undefined reference to `__gnu_test::copy_constructor::count_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test16copy_constructor9mark_callEv[_ZN10__gnu_test16copy_constructor9mark_callEv]+0x18): undefined reference to `__gnu_test::copy_constructor::count_'
-/usr/bin/ld: /tmp/cclI8xvW.o:2.cc:(.text._ZN10__gnu_test16copy_constructor9mark_callEv[_ZN10__gnu_test16copy_constructor9mark_callEv]+0x1c): more undefined references to `__gnu_test::copy_constructor::count_' follow
-/usr/bin/ld: /tmp/cclI8xvW.o: in function `__gnu_test::copy_constructor::mark_call()':
+/usr/bin/ld: /tmp/ccLvVKpr.o:2.cc:(.text._ZN10__gnu_test16copy_constructor9mark_callEv[_ZN10__gnu_test16copy_constructor9mark_callEv]+0x1c): more undefined references to `__gnu_test::copy_constructor::count_' follow
+/usr/bin/ld: /tmp/ccLvVKpr.o: in function `__gnu_test::copy_constructor::mark_call()':
 2.cc:(.text._ZN10__gnu_test16copy_constructor9mark_callEv[_ZN10__gnu_test16copy_constructor9mark_callEv]+0x30): undefined reference to `__gnu_test::copy_constructor::throw_on_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test16copy_constructor9mark_callEv[_ZN10__gnu_test16copy_constructor9mark_callEv]+0x34): undefined reference to `__gnu_test::copy_constructor::throw_on_'
-/usr/bin/ld: /tmp/cclI8xvW.o: in function `__gnu_test::copy_constructor::reset()':
+/usr/bin/ld: /tmp/ccLvVKpr.o: in function `__gnu_test::copy_constructor::reset()':
 2.cc:(.text._ZN10__gnu_test16copy_constructor5resetEv[_ZN10__gnu_test16copy_constructor5resetEv]+0x0): undefined reference to `__gnu_test::copy_constructor::count_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test16copy_constructor5resetEv[_ZN10__gnu_test16copy_constructor5resetEv]+0x4): undefined reference to `__gnu_test::copy_constructor::count_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test16copy_constructor5resetEv[_ZN10__gnu_test16copy_constructor5resetEv]+0xc): undefined reference to `__gnu_test::copy_constructor::throw_on_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test16copy_constructor5resetEv[_ZN10__gnu_test16copy_constructor5resetEv]+0x10): undefined reference to `__gnu_test::copy_constructor::throw_on_'
-/usr/bin/ld: /tmp/cclI8xvW.o: in function `__gnu_test::copy_constructor::throw_on(unsigned int)':
+/usr/bin/ld: /tmp/ccLvVKpr.o: in function `__gnu_test::copy_constructor::throw_on(unsigned int)':
 2.cc:(.text._ZN10__gnu_test16copy_constructor8throw_onEj[_ZN10__gnu_test16copy_constructor8throw_onEj]+0x8): undefined reference to `__gnu_test::copy_constructor::throw_on_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test16copy_constructor8throw_onEj[_ZN10__gnu_test16copy_constructor8throw_onEj]+0xc): undefined reference to `__gnu_test::copy_constructor::throw_on_'
-/usr/bin/ld: /tmp/cclI8xvW.o: in function `__gnu_test::assignment_operator::reset()':
+/usr/bin/ld: /tmp/ccLvVKpr.o: in function `__gnu_test::assignment_operator::reset()':
 2.cc:(.text._ZN10__gnu_test19assignment_operator5resetEv[_ZN10__gnu_test19assignment_operator5resetEv]+0x0): undefined reference to `__gnu_test::assignment_operator::count_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test19assignment_operator5resetEv[_ZN10__gnu_test19assignment_operator5resetEv]+0x4): undefined reference to `__gnu_test::assignment_operator::count_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test19assignment_operator5resetEv[_ZN10__gnu_test19assignment_operator5resetEv]+0xc): undefined reference to `__gnu_test::assignment_operator::throw_on_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test19assignment_operator5resetEv[_ZN10__gnu_test19assignment_operator5resetEv]+0x10): undefined reference to `__gnu_test::assignment_operator::throw_on_'
-/usr/bin/ld: /tmp/cclI8xvW.o: in function `__gnu_test::destructor::count()':
+/usr/bin/ld: /tmp/ccLvVKpr.o: in function `__gnu_test::destructor::count()':
 2.cc:(.text._ZN10__gnu_test10destructor5countEv[_ZN10__gnu_test10destructor5countEv]+0x0): undefined reference to `__gnu_test::destructor::_M_count'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test10destructor5countEv[_ZN10__gnu_test10destructor5countEv]+0x4): undefined reference to `__gnu_test::destructor::_M_count'
-/usr/bin/ld: /tmp/cclI8xvW.o: in function `__gnu_test::destructor::mark_call()':
+/usr/bin/ld: /tmp/ccLvVKpr.o: in function `__gnu_test::destructor::mark_call()':
 2.cc:(.text._ZN10__gnu_test10destructor9mark_callEv[_ZN10__gnu_test10destructor9mark_callEv]+0x0): undefined reference to `__gnu_test::destructor::_M_count'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test10destructor9mark_callEv[_ZN10__gnu_test10destructor9mark_callEv]+0x4): undefined reference to `__gnu_test::destructor::_M_count'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test10destructor9mark_callEv[_ZN10__gnu_test10destructor9mark_callEv]+0x10): undefined reference to `__gnu_test::destructor::_M_count'
-/usr/bin/ld: /tmp/cclI8xvW.o:2.cc:(.text._ZN10__gnu_test10destructor9mark_callEv[_ZN10__gnu_test10destructor9mark_callEv]+0x14): more undefined references to `__gnu_test::destructor::_M_count' follow
-/usr/bin/ld: /tmp/cclI8xvW.o: in function `__gnu_test::tracker_allocator_counter::allocate(unsigned long)':
+/usr/bin/ld: /tmp/ccLvVKpr.o:2.cc:(.text._ZN10__gnu_test10destructor9mark_callEv[_ZN10__gnu_test10destructor9mark_callEv]+0x14): more undefined references to `__gnu_test::destructor::_M_count' follow
+/usr/bin/ld: /tmp/ccLvVKpr.o: in function `__gnu_test::tracker_allocator_counter::allocate(unsigned long)':
 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0x8): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0xc): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0x1c): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0x20): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
-/usr/bin/ld: /tmp/cclI8xvW.o: in function `__gnu_test::tracker_allocator_counter::construct()':
+/usr/bin/ld: /tmp/ccLvVKpr.o: in function `__gnu_test::tracker_allocator_counter::construct()':
 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x10): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x14): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
-/usr/bin/ld: /tmp/cclI8xvW.o: in function `__gnu_test::tracker_allocator_counter::destroy()':
+/usr/bin/ld: /tmp/ccLvVKpr.o: in function `__gnu_test::tracker_allocator_counter::destroy()':
 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x10): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x14): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
-/usr/bin/ld: /tmp/cclI8xvW.o: in function `__gnu_test::tracker_allocator_counter::deallocate(unsigned long)':
+/usr/bin/ld: /tmp/ccLvVKpr.o: in function `__gnu_test::tracker_allocator_counter::deallocate(unsigned long)':
 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0x8): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0xc): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0x1c): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0x20): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
-/usr/bin/ld: /tmp/cclI8xvW.o: in function `__gnu_test::tracker_allocator_counter::get_allocation_count()':
+/usr/bin/ld: /tmp/ccLvVKpr.o: in function `__gnu_test::tracker_allocator_counter::get_allocation_count()':
 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter20get_allocation_countEv[_ZN10__gnu_test25tracker_allocator_counter20get_allocation_countEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter20get_allocation_countEv[_ZN10__gnu_test25tracker_allocator_counter20get_allocation_countEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
-/usr/bin/ld: /tmp/cclI8xvW.o: in function `__gnu_test::tracker_allocator_counter::get_deallocation_count()':
+/usr/bin/ld: /tmp/ccLvVKpr.o: in function `__gnu_test::tracker_allocator_counter::get_deallocation_count()':
 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter22get_deallocation_countEv[_ZN10__gnu_test25tracker_allocator_counter22get_deallocation_countEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter22get_deallocation_countEv[_ZN10__gnu_test25tracker_allocator_counter22get_deallocation_countEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
-/usr/bin/ld: /tmp/cclI8xvW.o: in function `__gnu_test::tracker_allocator_counter::reset()':
+/usr/bin/ld: /tmp/ccLvVKpr.o: in function `__gnu_test::tracker_allocator_counter::reset()':
 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0xc): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
@@ -1437,7 +1720,7 @@ Testing: gcc_tests/capacity/2.cc
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0x1c): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0x24): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: 2.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0x28): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
-/usr/bin/ld: /tmp/cclI8xvW.o: in function `decltype (::new ((void*)(0)) __gnu_test::copy_tracker()) std::construct_at<__gnu_test::copy_tracker>(__gnu_test::copy_tracker*)':
+/usr/bin/ld: /tmp/ccLvVKpr.o: in function `decltype (::new ((void*)(0)) __gnu_test::copy_tracker()) std::construct_at<__gnu_test::copy_tracker>(__gnu_test::copy_tracker*)':
 2.cc:(.text._ZSt12construct_atIN10__gnu_test12copy_trackerEJEEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS3_DpOS4_[_ZSt12construct_atIN10__gnu_test12copy_trackerEJEEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS3_DpOS4_]+0x24): undefined reference to `__gnu_test::copy_tracker::next_id_'
 /usr/bin/ld: 2.cc:(.text._ZSt12construct_atIN10__gnu_test12copy_trackerEJEEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS3_DpOS4_[_ZSt12construct_atIN10__gnu_test12copy_trackerEJEEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS3_DpOS4_]+0x28): undefined reference to `__gnu_test::copy_tracker::next_id_'
 /usr/bin/ld: 2.cc:(.text._ZSt12construct_atIN10__gnu_test12copy_trackerEJEEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS3_DpOS4_[_ZSt12construct_atIN10__gnu_test12copy_trackerEJEEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS3_DpOS4_]+0x34): undefined reference to `__gnu_test::copy_tracker::next_id_'
@@ -1621,34 +1904,34 @@ Testing: gcc_tests/26142-2.cc
   ✓ PASSED (compile-only)
 
 Testing: gcc_tests/init-list.cc
-/usr/bin/ld: /tmp/ccCnKigx.o: in function `main':
+/usr/bin/ld: /tmp/ccQN2lBC.o: in function `main':
 init-list.cc:(.text+0xa0): undefined reference to `__gnu_test::check_construct_destroy(char const*, int, int)'
 /usr/bin/ld: init-list.cc:(.text+0x14c): undefined reference to `__gnu_test::check_construct_destroy(char const*, int, int)'
 /usr/bin/ld: init-list.cc:(.text+0x228): undefined reference to `__gnu_test::check_construct_destroy(char const*, int, int)'
 /usr/bin/ld: init-list.cc:(.text+0x2a4): undefined reference to `__gnu_test::check_construct_destroy(char const*, int, int)'
 /usr/bin/ld: init-list.cc:(.text+0x32c): undefined reference to `__gnu_test::check_construct_destroy(char const*, int, int)'
-/usr/bin/ld: /tmp/ccCnKigx.o:init-list.cc:(.text+0x3a8): more undefined references to `__gnu_test::check_construct_destroy(char const*, int, int)' follow
-/usr/bin/ld: /tmp/ccCnKigx.o: in function `__gnu_test::tracker_allocator_counter::allocate(unsigned long)':
+/usr/bin/ld: /tmp/ccQN2lBC.o:init-list.cc:(.text+0x3a8): more undefined references to `__gnu_test::check_construct_destroy(char const*, int, int)' follow
+/usr/bin/ld: /tmp/ccQN2lBC.o: in function `__gnu_test::tracker_allocator_counter::allocate(unsigned long)':
 init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0x8): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0xc): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0x1c): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0x20): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
-/usr/bin/ld: /tmp/ccCnKigx.o: in function `__gnu_test::tracker_allocator_counter::construct()':
+/usr/bin/ld: /tmp/ccQN2lBC.o: in function `__gnu_test::tracker_allocator_counter::construct()':
 init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x10): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x14): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
-/usr/bin/ld: /tmp/ccCnKigx.o: in function `__gnu_test::tracker_allocator_counter::destroy()':
+/usr/bin/ld: /tmp/ccQN2lBC.o: in function `__gnu_test::tracker_allocator_counter::destroy()':
 init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x10): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x14): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
-/usr/bin/ld: /tmp/ccCnKigx.o: in function `__gnu_test::tracker_allocator_counter::deallocate(unsigned long)':
+/usr/bin/ld: /tmp/ccQN2lBC.o: in function `__gnu_test::tracker_allocator_counter::deallocate(unsigned long)':
 init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0x8): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0xc): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0x1c): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0x20): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
-/usr/bin/ld: /tmp/ccCnKigx.o: in function `__gnu_test::tracker_allocator_counter::reset()':
+/usr/bin/ld: /tmp/ccQN2lBC.o: in function `__gnu_test::tracker_allocator_counter::reset()':
 init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: init-list.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0xc): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
@@ -1910,34 +2193,34 @@ Testing: gcc_tests/15523.cc
   ✓ PASSED
 
 Testing: gcc_tests/check_construct_destroy.cc
-/usr/bin/ld: /tmp/ccvw8Hvy.o: in function `main':
+/usr/bin/ld: /tmp/ccp5GF4z.o: in function `main':
 check_construct_destroy.cc:(.text+0x4c): undefined reference to `__gnu_test::check_construct_destroy(char const*, int, int)'
 /usr/bin/ld: check_construct_destroy.cc:(.text+0x98): undefined reference to `__gnu_test::check_construct_destroy(char const*, int, int)'
 /usr/bin/ld: check_construct_destroy.cc:(.text+0x110): undefined reference to `__gnu_test::check_construct_destroy(char const*, int, int)'
 /usr/bin/ld: check_construct_destroy.cc:(.text+0x15c): undefined reference to `__gnu_test::check_construct_destroy(char const*, int, int)'
 /usr/bin/ld: check_construct_destroy.cc:(.text+0x214): undefined reference to `__gnu_test::check_construct_destroy(char const*, int, int)'
-/usr/bin/ld: /tmp/ccvw8Hvy.o:check_construct_destroy.cc:(.text+0x260): more undefined references to `__gnu_test::check_construct_destroy(char const*, int, int)' follow
-/usr/bin/ld: /tmp/ccvw8Hvy.o: in function `__gnu_test::tracker_allocator_counter::allocate(unsigned long)':
+/usr/bin/ld: /tmp/ccp5GF4z.o:check_construct_destroy.cc:(.text+0x260): more undefined references to `__gnu_test::check_construct_destroy(char const*, int, int)' follow
+/usr/bin/ld: /tmp/ccp5GF4z.o: in function `__gnu_test::tracker_allocator_counter::allocate(unsigned long)':
 check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0x8): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0xc): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0x1c): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0x20): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
-/usr/bin/ld: /tmp/ccvw8Hvy.o: in function `__gnu_test::tracker_allocator_counter::construct()':
+/usr/bin/ld: /tmp/ccp5GF4z.o: in function `__gnu_test::tracker_allocator_counter::construct()':
 check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x10): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x14): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
-/usr/bin/ld: /tmp/ccvw8Hvy.o: in function `__gnu_test::tracker_allocator_counter::destroy()':
+/usr/bin/ld: /tmp/ccp5GF4z.o: in function `__gnu_test::tracker_allocator_counter::destroy()':
 check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x10): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x14): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
-/usr/bin/ld: /tmp/ccvw8Hvy.o: in function `__gnu_test::tracker_allocator_counter::deallocate(unsigned long)':
+/usr/bin/ld: /tmp/ccp5GF4z.o: in function `__gnu_test::tracker_allocator_counter::deallocate(unsigned long)':
 check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0x8): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0xc): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0x1c): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0x20): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
-/usr/bin/ld: /tmp/ccvw8Hvy.o: in function `__gnu_test::tracker_allocator_counter::reset()':
+/usr/bin/ld: /tmp/ccp5GF4z.o: in function `__gnu_test::tracker_allocator_counter::reset()':
 check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: check_construct_destroy.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0xc): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
@@ -2099,87 +2382,87 @@ Testing: gcc_tests/cons/94540.cc
   ✓ PASSED
 
 Testing: gcc_tests/cons/4.cc
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `test_default_ctor_exception_gurantee()':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `test_default_ctor_exception_gurantee()':
 4.cc:(.text+0x1c): undefined reference to `__gnu_test::copy_tracker::next_id_'
 /usr/bin/ld: 4.cc:(.text+0x20): undefined reference to `__gnu_test::copy_tracker::next_id_'
 /usr/bin/ld: 4.cc:(.text+0x2c): undefined reference to `__gnu_test::copy_tracker::next_id_'
 /usr/bin/ld: 4.cc:(.text+0x30): undefined reference to `__gnu_test::copy_tracker::next_id_'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `test_fill_assign_1()':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `test_fill_assign_1()':
 4.cc:(.text+0xa90): undefined reference to `__gnu_test::copy_tracker::next_id_'
-/usr/bin/ld: /tmp/ccu5jhZg.o:4.cc:(.text+0xa94): more undefined references to `__gnu_test::copy_tracker::next_id_' follow
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::copy_constructor::count()':
+/usr/bin/ld: /tmp/ccTTvbmg.o:4.cc:(.text+0xa94): more undefined references to `__gnu_test::copy_tracker::next_id_' follow
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::copy_constructor::count()':
 4.cc:(.text._ZN10__gnu_test16copy_constructor5countEv[_ZN10__gnu_test16copy_constructor5countEv]+0x0): undefined reference to `__gnu_test::copy_constructor::count_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test16copy_constructor5countEv[_ZN10__gnu_test16copy_constructor5countEv]+0x4): undefined reference to `__gnu_test::copy_constructor::count_'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::copy_constructor::mark_call()':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::copy_constructor::mark_call()':
 4.cc:(.text._ZN10__gnu_test16copy_constructor9mark_callEv[_ZN10__gnu_test16copy_constructor9mark_callEv]+0x8): undefined reference to `__gnu_test::copy_constructor::count_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test16copy_constructor9mark_callEv[_ZN10__gnu_test16copy_constructor9mark_callEv]+0xc): undefined reference to `__gnu_test::copy_constructor::count_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test16copy_constructor9mark_callEv[_ZN10__gnu_test16copy_constructor9mark_callEv]+0x18): undefined reference to `__gnu_test::copy_constructor::count_'
-/usr/bin/ld: /tmp/ccu5jhZg.o:4.cc:(.text._ZN10__gnu_test16copy_constructor9mark_callEv[_ZN10__gnu_test16copy_constructor9mark_callEv]+0x1c): more undefined references to `__gnu_test::copy_constructor::count_' follow
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::copy_constructor::mark_call()':
+/usr/bin/ld: /tmp/ccTTvbmg.o:4.cc:(.text._ZN10__gnu_test16copy_constructor9mark_callEv[_ZN10__gnu_test16copy_constructor9mark_callEv]+0x1c): more undefined references to `__gnu_test::copy_constructor::count_' follow
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::copy_constructor::mark_call()':
 4.cc:(.text._ZN10__gnu_test16copy_constructor9mark_callEv[_ZN10__gnu_test16copy_constructor9mark_callEv]+0x30): undefined reference to `__gnu_test::copy_constructor::throw_on_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test16copy_constructor9mark_callEv[_ZN10__gnu_test16copy_constructor9mark_callEv]+0x34): undefined reference to `__gnu_test::copy_constructor::throw_on_'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::copy_constructor::reset()':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::copy_constructor::reset()':
 4.cc:(.text._ZN10__gnu_test16copy_constructor5resetEv[_ZN10__gnu_test16copy_constructor5resetEv]+0x0): undefined reference to `__gnu_test::copy_constructor::count_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test16copy_constructor5resetEv[_ZN10__gnu_test16copy_constructor5resetEv]+0x4): undefined reference to `__gnu_test::copy_constructor::count_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test16copy_constructor5resetEv[_ZN10__gnu_test16copy_constructor5resetEv]+0xc): undefined reference to `__gnu_test::copy_constructor::throw_on_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test16copy_constructor5resetEv[_ZN10__gnu_test16copy_constructor5resetEv]+0x10): undefined reference to `__gnu_test::copy_constructor::throw_on_'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::copy_constructor::throw_on(unsigned int)':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::copy_constructor::throw_on(unsigned int)':
 4.cc:(.text._ZN10__gnu_test16copy_constructor8throw_onEj[_ZN10__gnu_test16copy_constructor8throw_onEj]+0x8): undefined reference to `__gnu_test::copy_constructor::throw_on_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test16copy_constructor8throw_onEj[_ZN10__gnu_test16copy_constructor8throw_onEj]+0xc): undefined reference to `__gnu_test::copy_constructor::throw_on_'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::assignment_operator::count()':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::assignment_operator::count()':
 4.cc:(.text._ZN10__gnu_test19assignment_operator5countEv[_ZN10__gnu_test19assignment_operator5countEv]+0x0): undefined reference to `__gnu_test::assignment_operator::count_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test19assignment_operator5countEv[_ZN10__gnu_test19assignment_operator5countEv]+0x4): undefined reference to `__gnu_test::assignment_operator::count_'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::assignment_operator::mark_call()':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::assignment_operator::mark_call()':
 4.cc:(.text._ZN10__gnu_test19assignment_operator9mark_callEv[_ZN10__gnu_test19assignment_operator9mark_callEv]+0x8): undefined reference to `__gnu_test::assignment_operator::count_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test19assignment_operator9mark_callEv[_ZN10__gnu_test19assignment_operator9mark_callEv]+0xc): undefined reference to `__gnu_test::assignment_operator::count_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test19assignment_operator9mark_callEv[_ZN10__gnu_test19assignment_operator9mark_callEv]+0x18): undefined reference to `__gnu_test::assignment_operator::count_'
-/usr/bin/ld: /tmp/ccu5jhZg.o:4.cc:(.text._ZN10__gnu_test19assignment_operator9mark_callEv[_ZN10__gnu_test19assignment_operator9mark_callEv]+0x1c): more undefined references to `__gnu_test::assignment_operator::count_' follow
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::assignment_operator::mark_call()':
+/usr/bin/ld: /tmp/ccTTvbmg.o:4.cc:(.text._ZN10__gnu_test19assignment_operator9mark_callEv[_ZN10__gnu_test19assignment_operator9mark_callEv]+0x1c): more undefined references to `__gnu_test::assignment_operator::count_' follow
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::assignment_operator::mark_call()':
 4.cc:(.text._ZN10__gnu_test19assignment_operator9mark_callEv[_ZN10__gnu_test19assignment_operator9mark_callEv]+0x30): undefined reference to `__gnu_test::assignment_operator::throw_on_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test19assignment_operator9mark_callEv[_ZN10__gnu_test19assignment_operator9mark_callEv]+0x34): undefined reference to `__gnu_test::assignment_operator::throw_on_'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::assignment_operator::reset()':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::assignment_operator::reset()':
 4.cc:(.text._ZN10__gnu_test19assignment_operator5resetEv[_ZN10__gnu_test19assignment_operator5resetEv]+0x0): undefined reference to `__gnu_test::assignment_operator::count_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test19assignment_operator5resetEv[_ZN10__gnu_test19assignment_operator5resetEv]+0x4): undefined reference to `__gnu_test::assignment_operator::count_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test19assignment_operator5resetEv[_ZN10__gnu_test19assignment_operator5resetEv]+0xc): undefined reference to `__gnu_test::assignment_operator::throw_on_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test19assignment_operator5resetEv[_ZN10__gnu_test19assignment_operator5resetEv]+0x10): undefined reference to `__gnu_test::assignment_operator::throw_on_'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::assignment_operator::throw_on(unsigned int)':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::assignment_operator::throw_on(unsigned int)':
 4.cc:(.text._ZN10__gnu_test19assignment_operator8throw_onEj[_ZN10__gnu_test19assignment_operator8throw_onEj]+0x8): undefined reference to `__gnu_test::assignment_operator::throw_on_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test19assignment_operator8throw_onEj[_ZN10__gnu_test19assignment_operator8throw_onEj]+0xc): undefined reference to `__gnu_test::assignment_operator::throw_on_'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::destructor::mark_call()':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::destructor::mark_call()':
 4.cc:(.text._ZN10__gnu_test10destructor9mark_callEv[_ZN10__gnu_test10destructor9mark_callEv]+0x0): undefined reference to `__gnu_test::destructor::_M_count'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test10destructor9mark_callEv[_ZN10__gnu_test10destructor9mark_callEv]+0x4): undefined reference to `__gnu_test::destructor::_M_count'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test10destructor9mark_callEv[_ZN10__gnu_test10destructor9mark_callEv]+0x10): undefined reference to `__gnu_test::destructor::_M_count'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test10destructor9mark_callEv[_ZN10__gnu_test10destructor9mark_callEv]+0x14): undefined reference to `__gnu_test::destructor::_M_count'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::destructor::reset()':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::destructor::reset()':
 4.cc:(.text._ZN10__gnu_test10destructor5resetEv[_ZN10__gnu_test10destructor5resetEv]+0x0): undefined reference to `__gnu_test::destructor::_M_count'
-/usr/bin/ld: /tmp/ccu5jhZg.o:4.cc:(.text._ZN10__gnu_test10destructor5resetEv[_ZN10__gnu_test10destructor5resetEv]+0x4): more undefined references to `__gnu_test::destructor::_M_count' follow
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::tracker_allocator_counter::allocate(unsigned long)':
+/usr/bin/ld: /tmp/ccTTvbmg.o:4.cc:(.text._ZN10__gnu_test10destructor5resetEv[_ZN10__gnu_test10destructor5resetEv]+0x4): more undefined references to `__gnu_test::destructor::_M_count' follow
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::tracker_allocator_counter::allocate(unsigned long)':
 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0x8): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0xc): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0x1c): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0x20): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::tracker_allocator_counter::construct()':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::tracker_allocator_counter::construct()':
 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x10): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x14): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::tracker_allocator_counter::destroy()':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::tracker_allocator_counter::destroy()':
 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x10): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x14): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::tracker_allocator_counter::deallocate(unsigned long)':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::tracker_allocator_counter::deallocate(unsigned long)':
 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0x8): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0xc): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0x1c): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0x20): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::tracker_allocator_counter::get_allocation_count()':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::tracker_allocator_counter::get_allocation_count()':
 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter20get_allocation_countEv[_ZN10__gnu_test25tracker_allocator_counter20get_allocation_countEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter20get_allocation_countEv[_ZN10__gnu_test25tracker_allocator_counter20get_allocation_countEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::tracker_allocator_counter::get_deallocation_count()':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::tracker_allocator_counter::get_deallocation_count()':
 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter22get_deallocation_countEv[_ZN10__gnu_test25tracker_allocator_counter22get_deallocation_countEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter22get_deallocation_countEv[_ZN10__gnu_test25tracker_allocator_counter22get_deallocation_countEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `__gnu_test::tracker_allocator_counter::reset()':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `__gnu_test::tracker_allocator_counter::reset()':
 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0xc): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
@@ -2188,7 +2471,7 @@ Testing: gcc_tests/cons/4.cc
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0x1c): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0x24): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: 4.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0x28): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
-/usr/bin/ld: /tmp/ccu5jhZg.o: in function `decltype (::new ((void*)(0)) __gnu_test::copy_tracker()) std::construct_at<__gnu_test::copy_tracker>(__gnu_test::copy_tracker*)':
+/usr/bin/ld: /tmp/ccTTvbmg.o: in function `decltype (::new ((void*)(0)) __gnu_test::copy_tracker()) std::construct_at<__gnu_test::copy_tracker>(__gnu_test::copy_tracker*)':
 4.cc:(.text._ZSt12construct_atIN10__gnu_test12copy_trackerEJEEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS3_DpOS4_[_ZSt12construct_atIN10__gnu_test12copy_trackerEJEEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS3_DpOS4_]+0x24): undefined reference to `__gnu_test::copy_tracker::next_id_'
 /usr/bin/ld: 4.cc:(.text._ZSt12construct_atIN10__gnu_test12copy_trackerEJEEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS3_DpOS4_[_ZSt12construct_atIN10__gnu_test12copy_trackerEJEEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS3_DpOS4_]+0x28): undefined reference to `__gnu_test::copy_tracker::next_id_'
 /usr/bin/ld: 4.cc:(.text._ZSt12construct_atIN10__gnu_test12copy_trackerEJEEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS3_DpOS4_[_ZSt12construct_atIN10__gnu_test12copy_trackerEJEEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS3_DpOS4_]+0x34): undefined reference to `__gnu_test::copy_tracker::next_id_'
@@ -2241,6 +2524,16 @@ Testing: gcc_tests/cons/1.cc
   ✓ PASSED
 
 Testing: gcc_tests/cons/clear_allocator.cc
+gcc_tests/cons/clear_allocator.cc: In instantiation of 'void Check_Container() [with Container = std::vector<int, clear_alloc<int> >]':
+gcc_tests/cons/clear_allocator.cc:84:56:   required from here
+gcc_tests/cons/clear_allocator.cc:73:5: warning: ignoring return value of 'constexpr std::vector<T, Allocator>::allocator_type std::vector<T, Allocator>::get_allocator() const [with T = int; Allocator = clear_alloc<int>; allocator_type = clear_alloc<int>]', declared with attribute 'nodiscard' [-Wunused-result]
+   73 |     pic->get_allocator();
+      |     ^~~
+In file included from ./vector:2,
+                 from gcc_tests/cons/clear_allocator.cc:18:
+./vector.h:412:48: note: declared here
+  412 |         [[nodiscard]] constexpr allocator_type get_allocator() const noexcept{
+      |                                                ^~~~~~~~~~~~~
   ✓ PASSED
 
 Testing: gcc_tests/cons/6513.cc
@@ -2386,30 +2679,30 @@ Testing: gcc_tests/cons/113841.cc
   ✓ PASSED (compile-only)
 
 Testing: gcc_tests/cons/108487.cc
-/usr/bin/ld: /tmp/cc9iZRcB.o: in function `__gnu_test::tracker_allocator_counter::allocate(unsigned long)':
+/usr/bin/ld: /tmp/ccVIxiiY.o: in function `__gnu_test::tracker_allocator_counter::allocate(unsigned long)':
 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0x8): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0xc): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0x1c): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter8allocateEm[_ZN10__gnu_test25tracker_allocator_counter8allocateEm]+0x20): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
-/usr/bin/ld: /tmp/cc9iZRcB.o: in function `__gnu_test::tracker_allocator_counter::construct()':
+/usr/bin/ld: /tmp/ccVIxiiY.o: in function `__gnu_test::tracker_allocator_counter::construct()':
 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x10): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
 /usr/bin/ld: 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter9constructEv[_ZN10__gnu_test25tracker_allocator_counter9constructEv]+0x14): undefined reference to `__gnu_test::tracker_allocator_counter::constructCount_'
-/usr/bin/ld: /tmp/cc9iZRcB.o: in function `__gnu_test::tracker_allocator_counter::destroy()':
+/usr/bin/ld: /tmp/ccVIxiiY.o: in function `__gnu_test::tracker_allocator_counter::destroy()':
 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x10): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
 /usr/bin/ld: 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter7destroyEv[_ZN10__gnu_test25tracker_allocator_counter7destroyEv]+0x14): undefined reference to `__gnu_test::tracker_allocator_counter::destructCount_'
-/usr/bin/ld: /tmp/cc9iZRcB.o: in function `__gnu_test::tracker_allocator_counter::deallocate(unsigned long)':
+/usr/bin/ld: /tmp/ccVIxiiY.o: in function `__gnu_test::tracker_allocator_counter::deallocate(unsigned long)':
 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0x8): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0xc): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0x1c): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
 /usr/bin/ld: 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter10deallocateEm[_ZN10__gnu_test25tracker_allocator_counter10deallocateEm]+0x20): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
-/usr/bin/ld: /tmp/cc9iZRcB.o: in function `__gnu_test::tracker_allocator_counter::get_allocation_count()':
+/usr/bin/ld: /tmp/ccVIxiiY.o: in function `__gnu_test::tracker_allocator_counter::get_allocation_count()':
 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter20get_allocation_countEv[_ZN10__gnu_test25tracker_allocator_counter20get_allocation_countEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter20get_allocation_countEv[_ZN10__gnu_test25tracker_allocator_counter20get_allocation_countEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
-/usr/bin/ld: /tmp/cc9iZRcB.o: in function `__gnu_test::tracker_allocator_counter::reset()':
+/usr/bin/ld: /tmp/ccVIxiiY.o: in function `__gnu_test::tracker_allocator_counter::reset()':
 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0x0): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0x4): undefined reference to `__gnu_test::tracker_allocator_counter::allocationCount_'
 /usr/bin/ld: 108487.cc:(.text._ZN10__gnu_test25tracker_allocator_counter5resetEv[_ZN10__gnu_test25tracker_allocator_counter5resetEv]+0xc): undefined reference to `__gnu_test::tracker_allocator_counter::deallocationCount_'
@@ -2569,20 +2862,20 @@ Error: attempt to insert with an iterator range [first, last) from this
 container.
 
 Objects involved in the operation:
-    iterator "first" @ 0xfffffcf0de10 {
+    iterator "first" @ 0xffffe52f9320 {
       type = std::move_iterator<std::vector<std::unique_ptr<int, std::default_delete<int> >, std::allocator<std::unique_ptr<int, std::default_delete<int> > > >::normal_iterator<std::unique_ptr<int, std::default_delete<int> >*> > (mutable iterator);
       state = dereferenceable (start-of-sequence);
-      references sequence with type 'std::debug::vector<std::unique_ptr<int, std::default_delete<int> >, std::allocator<std::unique_ptr<int, std::default_delete<int> > > >' @ 0xfffffcf0dd20
+      references sequence with type 'std::debug::vector<std::unique_ptr<int, std::default_delete<int> >, std::allocator<std::unique_ptr<int, std::default_delete<int> > > >' @ 0xffffe52f9230
     }
-    iterator "last" @ 0xfffffcf0de60 {
+    iterator "last" @ 0xffffe52f9370 {
       type = std::move_iterator<std::vector<std::unique_ptr<int, std::default_delete<int> >, std::allocator<std::unique_ptr<int, std::default_delete<int> > > >::normal_iterator<std::unique_ptr<int, std::default_delete<int> >*> > (mutable iterator);
       state = past-the-end;
-      references sequence with type 'std::debug::vector<std::unique_ptr<int, std::default_delete<int> >, std::allocator<std::unique_ptr<int, std::default_delete<int> > > >' @ 0xfffffcf0dd20
+      references sequence with type 'std::debug::vector<std::unique_ptr<int, std::default_delete<int> >, std::allocator<std::unique_ptr<int, std::default_delete<int> > > >' @ 0xffffe52f9230
     }
-    sequence "this" @ 0xfffffcf0dd20 {
+    sequence "this" @ 0xffffe52f9230 {
       type = std::debug::vector<std::unique_ptr<int, std::default_delete<int> >, std::allocator<std::unique_ptr<int, std::default_delete<int> > > >;
     }
-./tests.sh: line 108:  9452 Aborted                 ./test 2>&1
+./tests.sh: line 108:  2055 Aborted                 ./test 2>&1
   ✗ FAILED
 
 Testing: gcc_tests/debug/insert5_neg.cc
@@ -2710,17 +3003,17 @@ Error: attempt to compare a singular iterator to a
 dereferenceable (start-of-sequence) iterator.
 
 Objects involved in the operation:
-    iterator "lhs" @ 0xffffdcffba00 {
+    iterator "lhs" @ 0xffffdee77490 {
       type = std::vector<int, gnu_test::propagating_allocator<int, false, std::allocator<int> > >::normal_iterator<int*> (mutable iterator);
       state = singular;
-      references sequence with type 'std::debug::vector<int, gnu_test::propagating_allocator<int, false, std::allocator<int> > >' @ 0xffffdcffba28
+      references sequence with type 'std::debug::vector<int, gnu_test::propagating_allocator<int, false, std::allocator<int> > >' @ 0xffffdee774b8
     }
-    iterator "rhs" @ 0xffffdcffbad8 {
+    iterator "rhs" @ 0xffffdee77568 {
       type = std::vector<int, gnu_test::propagating_allocator<int, false, std::allocator<int> > >::normal_iterator<int*> (mutable iterator);
       state = dereferenceable (start-of-sequence);
-      references sequence with type 'std::debug::vector<int, gnu_test::propagating_allocator<int, false, std::allocator<int> > >' @ 0xffffdcffba68
+      references sequence with type 'std::debug::vector<int, gnu_test::propagating_allocator<int, false, std::allocator<int> > >' @ 0xffffdee774f8
     }
-./tests.sh: line 108:  9617 Aborted                 ./test 2>&1
+./tests.sh: line 108:  2220 Aborted                 ./test 2>&1
   ✗ FAILED
 
 Testing: gcc_tests/debug/insert6_neg.cc
@@ -2736,7 +3029,7 @@ Testing: gcc_tests/debug/60499.cc
 
 Testing: gcc_tests/debug/invalidation/erase.cc
 gcc_tests/debug/invalidation/erase.cc:21: void test01(): Assertion 'last._M_singular()' failed.
-./tests.sh: line 108:  9650 Aborted                 ./test 2>&1
+./tests.sh: line 108:  2253 Aborted                 ./test 2>&1
   ✗ FAILED
 
 Testing: gcc_tests/debug/invalidation/4.cc
@@ -2786,12 +3079,12 @@ In function:
 Error: attempt to dereference a singular iterator.
 
 Objects involved in the operation:
-    iterator "this" @ 0xfffff1a68f40 {
+    iterator "this" @ 0xffffc2ee6990 {
       type = std::vector<int, gnu_test::uneq_allocator<int, std::allocator<int> > >::normal_iterator<int*> (mutable iterator);
       state = singular;
-      references sequence with type 'std::debug::vector<int, gnu_test::uneq_allocator<int, std::allocator<int> > >' @ 0xfffff1a68f68
+      references sequence with type 'std::debug::vector<int, gnu_test::uneq_allocator<int, std::allocator<int> > >' @ 0xffffc2ee69b8
     }
-./tests.sh: line 108:  9774 Aborted                 ./test 2>&1
+./tests.sh: line 108:  2377 Aborted                 ./test 2>&1
   ✗ FAILED
 
 Testing: gcc_tests/version.cc

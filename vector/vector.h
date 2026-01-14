@@ -57,7 +57,7 @@ namespace std{
                 return m_pointer;
             }
 
-            constexpr reference operator[](difference_type n) const noexcept{
+            [[nodiscard]] constexpr reference operator[](difference_type n) const noexcept{
                 return *(m_pointer+n);
             }
 
@@ -409,12 +409,12 @@ namespace std{
 
         
         //get allocator
-        constexpr allocator_type get_allocator() const noexcept{
+        [[nodiscard]] constexpr allocator_type get_allocator() const noexcept{
             return allocator_type(rebound_alloc);
         }
 
         //at
-        constexpr reference at(size_type pos){
+        [[nodiscard]] constexpr reference at(size_type pos){
             if (pos >= size()) {
                 if (std::is_constant_evaluated()) {
                     throw 0;
@@ -435,7 +435,7 @@ namespace std{
         }
 
         //operator[]
-        constexpr reference operator[](size_type pos){
+        [[nodiscard]] constexpr reference operator[](size_type pos){
             if (pos >= size()) {
                 if (std::is_constant_evaluated()) {
                     throw 0;
@@ -445,7 +445,7 @@ namespace std{
             return m_start[pos];
         }
 
-        constexpr const_reference operator[](size_type pos) const{
+        [[nodiscard]] constexpr const_reference operator[](size_type pos) const{
             if (pos >= size()) {
                 if (std::is_constant_evaluated()) {
                     throw 0;
@@ -456,98 +456,98 @@ namespace std{
         }
 
         //front
-        constexpr reference front(){
+        [[nodiscard]] constexpr reference front(){
             return m_start[0];
         }
 
-        constexpr const_reference front() const{
+        [[nodiscard]] constexpr const_reference front() const{
             return m_start[0];
         }
 
         //back
-        constexpr reference back(){
+        [[nodiscard]] constexpr reference back(){
             return m_start[size()-1];
         }
 
-        constexpr const_reference back() const{
+        [[nodiscard]] constexpr const_reference back() const{
             return m_start[size()-1];
         }
 
         //data
-        constexpr T* data() noexcept{
+        [[nodiscard]] constexpr T* data() noexcept{
             // m_start may be a fancy pointer, use std::to_address to return 
             // the raw pointer
             return std::to_address(m_start);
         }
 
-        constexpr const T* data() const noexcept{
+        [[nodiscard]] constexpr const T* data() const noexcept{
             return std::to_address(m_start);
         }
 
         //begin
-        constexpr iterator begin() noexcept{
+        [[nodiscard]] constexpr iterator begin() noexcept{
             return iterator(m_start);
         }
 
-        constexpr const_iterator begin() const noexcept{
+        [[nodiscard]] constexpr const_iterator begin() const noexcept{
             return const_iterator(m_start);
         }
 
-        constexpr const_iterator cbegin() const noexcept{
+        [[nodiscard]] constexpr const_iterator cbegin() const noexcept{
             return const_iterator(m_start);
         }
 
         //end
-        constexpr iterator end() noexcept{
+        [[nodiscard]] constexpr iterator end() noexcept{
             return iterator(m_finish);
         }
 
-        constexpr const_iterator end() const noexcept{
+        [[nodiscard]] constexpr const_iterator end() const noexcept{
             return const_iterator(m_finish);
         }
 
-        constexpr const_iterator cend() const noexcept{
+        [[nodiscard]] constexpr const_iterator cend() const noexcept{
             return end();
         }
         
         //rbegin
-        constexpr reverse_iterator rbegin() noexcept{
+        [[nodiscard]] constexpr reverse_iterator rbegin() noexcept{
             return reverse_iterator(iterator(m_finish));
         }
 
-        constexpr const_reverse_iterator rbegin() const noexcept{
+        [[nodiscard]] constexpr const_reverse_iterator rbegin() const noexcept{
             return const_reverse_iterator(const_iterator(m_finish));
         }
 
-        constexpr const_reverse_iterator crbegin() const noexcept{
+        [[nodiscard]] constexpr const_reverse_iterator crbegin() const noexcept{
             return rbegin();
         }
 
         //rend
-        constexpr reverse_iterator rend() noexcept{
+        [[nodiscard]] constexpr reverse_iterator rend() noexcept{
             return reverse_iterator(iterator(m_start));
         }
 
-        constexpr const_reverse_iterator rend() const noexcept{
+        [[nodiscard]] constexpr const_reverse_iterator rend() const noexcept{
             return const_reverse_iterator(const_iterator(m_start));
         }
 
-        constexpr const_reverse_iterator crend() const noexcept{
+        [[nodiscard]] constexpr const_reverse_iterator crend() const noexcept{
             return rend();
         }
 
         //empty
-        constexpr bool empty() const noexcept{
+        [[nodiscard]] constexpr bool empty() const noexcept{
             return m_finish == m_start;
         }
 
         //size
-        constexpr size_type size() const noexcept{
+        [[nodiscard]] constexpr size_type size() const noexcept{
             return m_finish-m_start;
         }
 
         //max_size
-        constexpr size_type max_size() const noexcept{
+        [[nodiscard]] constexpr size_type max_size() const noexcept{
             size_type alloc_max = std::allocator_traits<rebound_alloc_type>::max_size(rebound_alloc);
             size_type diff_max = std::numeric_limits<difference_type>::max();
             return std::min(alloc_max, diff_max);
@@ -563,7 +563,7 @@ namespace std{
         }
 
         //capacity
-        constexpr size_type capacity() const noexcept{
+        [[nodiscard]] constexpr size_type capacity() const noexcept{
             return m_end_of_storage - m_start;
         }
 
